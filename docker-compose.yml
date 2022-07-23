@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  sqlDb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  redis-master:
+    image: redis:5.0.3-alpine3.9
+
+  redis-slave1:
+    image: redis:5.0.3-alpine3.9
+
+  redis-slave2:
+    image: redis:5.0.3-alpine3.9
+
+  redis-sentinel-1:
+    container_name: redis-sentinel-1
+    build: sentinel
+    links:
+      - redis-master
+
+  redis-sentinel-2:
+    container_name: redis-sentinel-2
+    build: sentinel
+    links:
+      - redis-master
+
+  redis-sentinel-3:
+    container_name: redis-sentinel-3
+    build: sentinel
+    links:
+      - redis-master
+
+  testapi:
+    image: ${DOCKER_REGISTRY-}testapi
+    build:
+      context: .
+      dockerfile: Dockerfile

@@ -1,0 +1,67 @@
+services:
+  redis-master:
+    container_name: redis-master
+    image: redis:5.0.3-alpine3.9
+    ports:
+    - published: 6379
+      target: 6379
+    restart: always
+  redis-sentinel-1:
+    build:
+      context: D:\work\GitHub\Practice\sentinel
+    container_name: redis-sentinel-1
+    links:
+    - redis-master
+  redis-sentinel-2:
+    build:
+      context: D:\work\GitHub\Practice\sentinel
+    container_name: redis-sentinel-2
+    links:
+    - redis-master
+  redis-sentinel-3:
+    build:
+      context: D:\work\GitHub\Practice\sentinel
+    container_name: redis-sentinel-3
+    links:
+    - redis-master
+  redis-slave1:
+    command: redis-server --slaveof redis-master 6379
+    container_name: redis-slave1
+    image: redis:5.0.3-alpine3.9
+    links:
+    - redis-master
+    ports:
+    - published: 6380
+      target: 6379
+    restart: always
+  redis-slave2:
+    command: redis-server --slaveof redis-master 6379
+    container_name: redis-slave2
+    image: redis:5.0.3-alpine3.9
+    links:
+    - redis-master
+    ports:
+    - published: 6381
+      target: 6379
+    restart: always
+  sqlDb:
+    container_name: sqlDb
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: SwN12345678
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    ports:
+    - published: 1433
+      target: 1433
+    restart: always
+  testapi:
+    build:
+      context: D:\work\GitHub\Practice
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Stage
+    image: testapi
+    ports:
+    - published: 8000
+      target: 80
+version: '3.4'

@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "198117e9-7e6c-422b-9b4d-614cd9a0f1e7": {
+      "ProjectGuid": "198117e9-7e6c-422b-9b4d-614cd9a0f1e7",
+      "DisplayName": "TestApi",
+      "ColorIndex": 0
+    },
+    "9fbbbff8-d9d7-44b0-ba7d-8907df8be074": {
+      "ProjectGuid": "9fbbbff8-d9d7-44b0-ba7d-8907df8be074",
+      "DisplayName": "docker-compose",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
